@@ -61,6 +61,26 @@
       </div>
    
           </div>
+          <div v-else="showcartpage">
+            <div class="courseheading text-center ml-5 mt-5" >View your items in cart <br>One stop away from world class learning! </div>
+             <button class="btn btn-danger ml-5" v-on:click="gobacktoproducts()"> Check Products</button>
+           <div class="row ml-5">
+             <div v-for="a in cart">
+               <div class="col-sm-4  ">
+                 <div class="card shadow-sm mt-5 md-4 ml-5 " style="width:300px" height="100px">
+                  <img class="card-img-top img-fluid" v-bind:src="a.image"  alt="Card image" style="width:100%">
+                   <div class="card-body">
+                     <h3 class="card-title ">{{a.name}}</h3>
+                     <p class="card-text"> Additional Details :{{a.details}}</p>
+                     <p class="card-text">Price : {{a.price}}</p>
+                      <p class="card-text">Location : {{a.Location}}</p>
+                    
+                    <button class="btn btn-primary"  v-on:click="removefromcart(a)"> Remove</button>
+                   </div>
+                 </div>
+           </div>
+             </div>
+             </div>
     </div>
     
           <script type="text/javascript">
