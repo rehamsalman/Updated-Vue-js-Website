@@ -27,7 +27,9 @@
             <li class="nav-item active"><a class="nav-link" href="#">Link</a></li>
             <li class="nav-item active"> <a class="nav-link" href="#">Link</a> </li>
           </ul>
-          <button class="btn btn-danger navbar-btn"><span>{{lengthofcart}}</span><span class="fas fa-cart-plus">Cart</span> </button>
+          
+          <button class="btn btn-danger navbar-btn" v-if ="viewshoppingcart()" v-on:click="gotocartpage()"><span>{{lengthofcart}}</span><span class="fas fa-cart-plus">Cart</span> </button>
+          <button class="btn btn-danger navbar-btn" v-else disabled> Cart</button>
          
       </div>
           
@@ -47,7 +49,9 @@
                 <p class="card-text"> Location: {{lesson.Location}}</p>
                <p class="card-text"> Stock : {{lesson.inventory}}</p>
                <p class="card-text"><small class="text-muted">Sale ends in 5 days</small></p>
-                <button class="btn btn-primary"  v-on:click="addtocart(lesson)">Add to cart</button>
+               <p class ="card-text">  {{lesson.inventory-cartItemCount(lesson.id)}} Items left in stock!</p>
+                <button class="btn btn-primary"  v-on:click="addtocart(lesson)" v-if="productavailable(lesson)">Add to cart</button>
+              <button class="btn btn-primary"  v-else disabled> Add to cart</button>
                
       
               </div>
@@ -71,8 +75,41 @@
                 addtocart(reham){
                 this.cart.push(reham);
                 reham.inventory-=1;
-              }
+              },
+              gotocartpage(){
+            this.showProduct=false;
+            this.showcartpage=true;
+                },
+            
+                gobacktoproducts(){
+               
+                  this.showcartpage=false;
+                  this.showProduct=true;
+                },
+                
+                
+                productavailable(check){
+                if (check.inventory > this.cartItemCount(check.id)){
+                  return true;
+                }
+                
+              },
+              cartItemCount(id){ //how many math lessons  instances in the cart
+                let count=0;
+                for (let i=0; i<this.cart.length; i++){
+                  if (this.cart[i]===id){
+                    count++;
+            }
+            }
+               return count;       
             },
+            viewshoppingcart(){
+           if(this.cart.length>0 ){
+            return true;
+           }
+          },
+          },
+            
             computed:{
               lengthofcart(){
                 return this.cart.length;
@@ -81,7 +118,7 @@
               
             },
           
-            })
+            });
           </script>
           
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
