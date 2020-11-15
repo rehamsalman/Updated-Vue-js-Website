@@ -56,9 +56,9 @@
                 <p class="card-text text center"> Additional Details : {{lesson.details}}</p>
                 <p class="card-text">Price : $ {{lesson.price}} </p>
                 <p class="card-text"> Location: {{lesson.Location}}</p>
-               <p class="card-text"> Stock : {{lesson.inventory}}</p>
+               <p class="card-text"> Spaces : {{lesson.inventory}}</p>
                <p class="card-text"><small class="text-muted">Sale ends in 5 days</small></p>
-               <p class ="card-text">  {{lesson.inventory-cartItemCount(lesson.id)}} Items left in stock!</p>
+               <p class ="card-text">  {{lesson.inventory-cartItemCount(lesson.id)}} Courses Left!</p>
                 <button class="btn btn-primary"  v-on:click="addtocart(lesson)" v-if="productavailable(lesson)">Add to cart</button>
               <button class="btn btn-primary"  v-else disabled> Add to cart</button>
             </div>
