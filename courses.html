@@ -22,10 +22,9 @@
               <span class="navbar-toggler-icon mr-auto"></span></button>
           <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav ml-auto mr-5">
-            <li class="nav-item active"><a class="nav-link" href="#">Link</a></li>
-            <li class="nav-item active"> <a class="nav-link" href="#">Link</a> </li>
-            <li class="nav-item active"><a class="nav-link" href="#">Link</a></li>
-            <li class="nav-item active"> <a class="nav-link" href="#">Link</a> </li>
+            <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
+            <li class="nav-item active"> <a class="nav-link" href="#">About</a> </li>
+            <li class="nav-item active"> <a class="nav-link" href="#">Explore</a> </li>
           </ul>
           
           <button class="btn btn-danger navbar-btn" v-if ="viewshoppingcart()" v-on:click="gotocartpage()"><span>{{lengthofcart}}</span><span class="fas fa-cart-plus">Cart</span> </button>
@@ -36,13 +35,20 @@
         </nav>
         <div v-if="showProduct" > 
           <div class="courseheading text-center ml-5 mt-5" > Explore 100s of courses taught <br>by world class institutes </div>
-          <label class="radio-inline ml-5"><input type="radio" name="optradio" checked>Subject</label>
-          <label class="radio-inline ml-5"><input type="radio" name="optradio">LOcation</label>
-          <label class="radio-inline ml-5"><input type="radio" name="optradio"> Price</label>
-          <label class="radio-inline ml-5"><input type="radio" name="optradio" v-on:click="sortedProducts()"> Availability</label>
+         
+          <h4 class="text-center mt-5" >Sort By:</h4>
+          <div class="text-center">
+                <input name="element" value="name" type="radio" @click="sortingbyelement"><label>Title</label>
+                <input name="element" value="price" type="radio" @click="sortingbyelement"> <label>Price</label>
+                <input name="element" value="Location" type="radio" @click="sortingbyelement"><label>Location</label>
+                <input name="element" value="inventory" type="radio" @click="sortingbyelement"><label>Stock</label>
+                <input name="choice" value="asc" type="radio" @click="sortingbyelement"><label>Ascending</label>
+                <input name="choice" value="desc" type="radio" @click="sortingbyelement"><label>Descending</label>
+              </div>
       <div class="row ml-5">
         <div v-for="lesson in lessons">
           <div class="col-sm-4 ">
+            <div class="hovercard">
             <div class="card shadow-sm mt-5 md-4 ml-5 " style="width:300px" height="100px">
               <img class="card-img-top img-fluid" v-bind:src="lesson.image"  alt="Card image" style="width:100%">
               <div class="card-body">
@@ -55,7 +61,7 @@
                <p class ="card-text">  {{lesson.inventory-cartItemCount(lesson.id)}} Items left in stock!</p>
                 <button class="btn btn-primary"  v-on:click="addtocart(lesson)" v-if="productavailable(lesson)">Add to cart</button>
               <button class="btn btn-primary"  v-else disabled> Add to cart</button>
-               
+            </div>
       
               </div>
             </div>
@@ -66,7 +72,7 @@
           </div>
           <div v-else="showcartpage">
             <div class="courseheading text-center ml-5 mt-5" >View your items in cart <br>One stop away from world class learning! </div>
-             <button class="btn btn-danger ml-5" v-on:click="gobacktoproducts()"> Check Products</button>
+             <button class="btn btn-danger navbar-btn ml-5"  v-on:click="gobacktoproducts()">Go to Product</button>
            <div class="row ml-5">
              <div v-for="a in cart">
                <div class="col-sm-4  ">
@@ -101,9 +107,8 @@
                 </div>
                 <div class="form-group">        
                   <div class="col-sm-offset-2 col-sm-10">
-            
-                    <button type="submit" v-on:click="finalmessage" class="btn btn-primary" v-if="cancheckout()" >Checkout</button>
-                    <button type="submit" v-on:click="finalmessage" class="btn btn-primary" v-else disabled >Checkout</button>
+                    <button type="submit" v-on:click="finalmessage()" class="btn btn-primary" v-if="cancheckout()" >Checkout</button>
+                    <button type="submit" v-on:click="finalmessage()" class="btn btn-primary" v-else disabled >Checkout</button>
                     
                   </div>
                 </div>
@@ -159,7 +164,6 @@
                   else{
                     return true;
                   }
-
                 }
                 else{
                   
@@ -171,6 +175,22 @@
                 }
 
               },
+              sortingbyelement() {
+                var element = document.querySelector('input[name="element"]:checked').value;
+                var choice = document.querySelector('input[name="choice"]:checked');
+                if (element != null && choice != null) {
+                    console.log("The element being sorted: " + element + " choice: " + choice.value);
+                    if (choice.value == "asc") {
+                        this.lessons.sort((a, b) => (a[element] < b[element] ? -1 : a[element] > b[element] ? 1 : 0));
+                    }
+                    else if (choice.value == "desc") {
+                        this.lessons.sort((a, b) => (a[element] > b[element] ? -1 : a[element] < b[element] ? 1 : 0));
+                    }
+                }
+                else {
+                    this.lessons.sort((a, b) => (a[element] < b[element] ? -1 : a[element] > b[element] ? 1 : 0));
+                }
+            },
 
         removefromcart(lesson){
        if(this.cart.splice(this.cart.indexOf(lesson),1)){
@@ -196,7 +216,7 @@
            }
           },
           finalmessage(){
-            alert("orser sbmited");
+            alert("Order sbmited");
           }
           },
             
