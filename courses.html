@@ -36,7 +36,10 @@
         </nav>
         <div v-if="showProduct" > 
           <div class="courseheading text-center ml-5 mt-5" > Explore 100s of courses taught <br>by world class institutes </div>
-      
+          <label class="radio-inline ml-5"><input type="radio" name="optradio" checked>Subject</label>
+          <label class="radio-inline ml-5"><input type="radio" name="optradio">LOcation</label>
+          <label class="radio-inline ml-5"><input type="radio" name="optradio"> Price</label>
+          <label class="radio-inline ml-5"><input type="radio" name="optradio" v-on:click="sortedProducts()"> Availability</label>
       <div class="row ml-5">
         <div v-for="lesson in lessons">
           <div class="col-sm-4 ">
@@ -100,7 +103,7 @@
                   <div class="col-sm-offset-2 col-sm-10">
             
                     <button type="submit" v-on:click="finalmessage" class="btn btn-primary" v-if="cancheckout()" >Checkout</button>
-                    <button type="submit" v-on:click="finalmessage" class="btn btn-primary" v-else disabled  >Checkout</button>
+                    <button type="submit" v-on:click="finalmessage" class="btn btn-primary" v-else disabled >Checkout</button>
                     
                   </div>
                 </div>
@@ -149,9 +152,24 @@
                 
               },
               cancheckout(){
-                if (this.person.name==="" && this.person.number===""){
+                if (this.person.name!=="" && this.person.number!==""){
+                  if(this.hasNumber==true){
+                    return false;  
+                  }
+                  else{
+                    return true;
+                  }
+
+                }
+                else{
+                  
+                  if(this.person.number==="" || this.person.name===""){
+                    return false;
+                    }
+                
                   return false;
                 }
+
               },
 
         removefromcart(lesson){
@@ -186,9 +204,12 @@
               lengthofcart(){
                 return this.cart.length;
               },
+              hasNumber() {
+                  return /\d/.test(this.person.name);
+},
+}
               
-              
-            },
+            
           
             });
           </script>
