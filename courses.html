@@ -114,6 +114,16 @@
                 }
                 
               },
+
+        removefromcart(lesson){
+       if(this.cart.splice(this.cart.indexOf(lesson),1)){
+         lesson.inventory+=1;
+         console.log("itemm removed");
+       }
+          else{
+            console.log("nothing");
+          }
+        },
               cartItemCount(id){ //how many math lessons  instances in the cart
                 let count=0;
                 for (let i=0; i<this.cart.length; i++){
