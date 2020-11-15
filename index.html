@@ -54,7 +54,7 @@
               <div class="card-body">
                 <h3 class="card-title text center">{{lesson.name}}</h3>
                 <p class="card-text text center"> Additional Details : {{lesson.details}}</p>
-                <p class="card-text">Price : {{lesson.price}}</p>
+                <p class="card-text">Price : $ {{lesson.price}} </p>
                 <p class="card-text"> Location: {{lesson.Location}}</p>
                <p class="card-text"> Stock : {{lesson.inventory}}</p>
                <p class="card-text"><small class="text-muted">Sale ends in 5 days</small></p>
@@ -100,7 +100,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="control-label col-sm-2" for="pwd">Phone:</label>
+                  <label class="control-label col-sm-2" >Phone:</label>
                   <div class="col-sm-10">          
                     <input type="number" v-model.number="person.number" class="form-control" placeholder="Enter phone number" required>
                   </div>
