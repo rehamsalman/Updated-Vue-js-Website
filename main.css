@@ -23,7 +23,7 @@ padding:0 35px;
     transition: transform 0.9s;
 }
 .card:hover{
-    transform: scale(1.1);
+    transform: scale(1.02);
 }
 .nav-link{
     color:black;
