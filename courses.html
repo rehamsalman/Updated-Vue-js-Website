@@ -87,7 +87,7 @@
                 <div class="form-group">
                   <label class="control-label col-sm-2" >Name:</label>
                   <div class="col-sm-10">
-                    <input type="email" class="form-control" v-model="person.name" placeholder="Enter your name here" required>
+                    <input ttype="text" id="num" pattern="[A-Za-z]" title="Only Alphabets" class="form-control" v-model="person.name" placeholder="Enter your name here" required>
                   </div>
                 </div>
                 <div class="form-group">
@@ -99,8 +99,9 @@
                 <div class="form-group">        
                   <div class="col-sm-offset-2 col-sm-10">
             
-                    <button type="submit" class="btn btn-primary" >Checkout</button>
-                    <span >{{removenumber}}</span>
+                    <button type="submit" v-on:click="finalmessage" class="btn btn-primary" v-if="cancheckout()" >Checkout</button>
+                    <button type="submit" v-on:click="finalmessage" class="btn btn-primary" v-else disabled  >Checkout</button>
+                    
                   </div>
                 </div>
               </form>
@@ -147,6 +148,11 @@
                 }
                 
               },
+              cancheckout(){
+                if (this.person.name==="" && this.person.number===""){
+                  return false;
+                }
+              },
 
         removefromcart(lesson){
        if(this.cart.splice(this.cart.indexOf(lesson),1)){
@@ -171,6 +177,9 @@
             return true;
            }
           },
+          finalmessage(){
+            alert("orser sbmited");
+          }
           },
             
             computed:{
